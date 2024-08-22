@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">Vite Logo
+        <a href="https://vitejs.dev" target="_blank">Vite Losgo
         </a>
         <a href="https://react.dev" target="_blank">React Logo</a>
       </div>
