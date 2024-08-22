@@ -1,12 +1,10 @@
 import { useState } from 'react'
-import { HeaderComponent } from './layout/HeaderComponent'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-    <HeaderComponent />
       <div>
         <a href="https://vitejs.dev" target="_blank">Vite Logo
         </a>
