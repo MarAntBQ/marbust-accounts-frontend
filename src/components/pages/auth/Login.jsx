@@ -10,7 +10,7 @@ export const Login = () => {
         <input type='password' placeholder='Password' />
         <button className='btn--center'>Login</button>
         <div className='form__link'>
-        <a href='#'>Forgot password?</a> | <a href='#'>Create Account</a>
+        <a href='#'>Forgot password?</a> <strong>|</strong> <a href='#'>Create Account</a>
         </div>
       </form>
       </div>
