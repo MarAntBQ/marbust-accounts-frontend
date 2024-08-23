@@ -1,7 +1,10 @@
 import React from 'react'
+import { Login } from './pages/auth/Login'
 
 export const AuthLayout = () => {
   return (
-    <div>AuthLayout</div>
+    <div className='auth-layout'>
+      <Login/>
+    </div>
   )
 }
