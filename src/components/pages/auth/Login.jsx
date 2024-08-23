@@ -1,15 +1,16 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
   const emailInput = useRef(null);
   const passwordInput = useRef(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,11 +37,10 @@ export const Login = () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       });
-      setToken(response.data.token);
-      setError('¡Welcome back!');
-      setEmail('');
-      setPassword('');
-      localStorage.setItem('token', response.data.token);
+      if (response.data && response.data.token) {
+        localStorage.setItem('loginToken', response.data.token);
+        navigate('/dashboard');
+      }
     } catch (err) {
       setError('Invalid email or password');
     } finally {

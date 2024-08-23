@@ -1,28 +1,19 @@
 import React from 'react'
 import { Header } from './layout/Header'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Home } from './pages/Home'
 
 export const DashboardLayout = () => {
   return (
     <div className='dashboard'>
       <Header />
       <main>
-        <h1>Welcome to  Marbust Accounts&reg; 2.5.0</h1>
-        <br />
-        <ol>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-          <li><strong>Update (Aug 22, 2024):</strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti possimus, maxime officia, reiciendis porro quis blanditiis fugit assumenda cum ut distinctio tempora pariatur cupiditate. Nihil dolorum deserunt reiciendis quasi aut.</li>
-        </ol>
+      <BrowserRouter>
+      <Routes>
+        <Route path='/dashboard' element={<Home/>}/>
+        <Route path="*" element={<Dashboard/>}></Route>
+      </Routes>
+      </BrowserRouter>
       </main>
     </div>
   )
