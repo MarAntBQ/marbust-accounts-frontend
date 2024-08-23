@@ -76,7 +76,7 @@ export const Login = () => {
             {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Login'}
           </button>
           <div className='form__link'>
-            <a href='#'>Forgot password?</a> <strong>|</strong> <a href='#'>Create Account</a>
+            <a href='/forget-password'>Forgot password?</a> <strong>|</strong> <a href='/register'>Create Account</a>
           </div>
         </form>
       </div>
