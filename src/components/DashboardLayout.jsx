@@ -11,7 +11,7 @@ export const DashboardLayout = () => {
       <BrowserRouter>
       <Routes>
         <Route path='/dashboard' element={<Home/>}/>
-        <Route path="*" element={<Dashboard/>}></Route>
+        <Route path="*" element={<Home/>}></Route>
       </Routes>
       </BrowserRouter>
       </main>
