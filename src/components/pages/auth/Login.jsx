@@ -8,8 +8,8 @@ export const Login = () => {
   const [error, setError] = useState('');
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
-  const emailInput = useRef();
-  const passwordInput = useRef();
+  const emailInput = useRef(null);
+  const passwordInput = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +37,9 @@ export const Login = () => {
         },
       });
       setToken(response.data.token);
-      setError('');
+      setError('¡Welcome back!');
+      setEmail('');
+      setPassword('');
       localStorage.setItem('token', response.data.token);
     } catch (err) {
       setError('Invalid email or password');
