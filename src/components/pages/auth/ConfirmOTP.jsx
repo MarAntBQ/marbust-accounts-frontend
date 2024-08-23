@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 
 export const ConfirmOTP = () => {
   const [email, setEmail] = useState('');
@@ -76,7 +77,7 @@ export const ConfirmOTP = () => {
             {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Login'}
           </button>
           <div className='form__link'>
-            <a href='/login'>Login</a> <strong>|</strong> <a href='/register'>Create Account</a>
+            <Link to='/login'>Login</Link> <strong>|</strong> <Link to='/register'>Create Account</Link>
           </div>
         </form>
       </div>

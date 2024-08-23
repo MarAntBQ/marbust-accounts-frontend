@@ -1,12 +1,14 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 
 export const ForgetPassword = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const emailInput = useRef(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +32,9 @@ export const ForgetPassword = () => {
         setError(response.data.message); // Mensaje de éxito
       }
       setEmail('');
+      setTimeout(() => {
+        navigate('/login');
+      }, 1000);
     } catch (err) {
       if (err.response && err.response.data && err.response.data.message) {
         setError(err.response.data.message);
@@ -60,7 +65,7 @@ export const ForgetPassword = () => {
             {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Reset Password'}
           </button>
           <div className='form__link'>
-            <a href='/login'>Login</a> <strong>|</strong> <a href='/register'>Create Account</a>
+            <Link to='/login'>Login</Link> <strong>|</strong> <Link to='/register'>Create Account</Link>
           </div>
         </form>
       </div>

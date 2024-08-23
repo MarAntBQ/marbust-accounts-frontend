@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 
 export const Register = () => {
   const [email, setEmail] = useState('');
@@ -76,7 +77,7 @@ export const Register = () => {
             {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Login'}
           </button>
           <div className='form__link'>
-            <a href='/login'>Login</a> <strong>|</strong> <a href='/forget-password'>Forgot Password?</a>
+            <Link to='/login'>Login</Link> <strong>|</strong> <Link to='/forget-password'>Forgot Password?</Link>
           </div>
         </form>
       </div>

@@ -1,6 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
-export const Header = () => {
+export const Header = ({ setToken }) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem('loginToken')
+    setToken(null)
+    navigate('/login');
+  }
   return (
     <header>
         <nav>
@@ -15,6 +22,7 @@ export const Header = () => {
                 </li>
             </ul>
         </nav>
+        <a href='#' onClick={handleLogout}>Cerrar Sesión</a>
     </header>
   )
 }

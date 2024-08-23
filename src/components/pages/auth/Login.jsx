@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
-export const Login = () => {
+export const Login = ({ setToken, token }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -39,6 +39,7 @@ export const Login = () => {
       });
       if (response.data && response.data.token) {
         localStorage.setItem('loginToken', response.data.token);
+        setToken(response.data.token);
         navigate('/dashboard');
       }
     } catch (err) {
@@ -76,7 +77,7 @@ export const Login = () => {
             {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Login'}
           </button>
           <div className='form__link'>
-            <a href='/forget-password'>Forgot password?</a> <strong>|</strong> <a href='/register'>Create Account</a>
+          <Link to='/forget-password'>Forgot password?</Link> <strong>|</strong> <Link to='/register'>Create Account</Link>
           </div>
         </form>
       </div>

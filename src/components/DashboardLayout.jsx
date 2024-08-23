@@ -1,19 +1,17 @@
 import React from 'react'
 import { Header } from './layout/Header'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { Home } from './pages/Home'
 
-export const DashboardLayout = () => {
+export const DashboardLayout = ({ setToken, token }) => {
   return (
     <div className='dashboard'>
-      <Header />
+      <Header setToken={setToken}/>
       <main>
-      <BrowserRouter>
       <Routes>
         <Route path='/dashboard' element={<Home/>}/>
         <Route path="*" element={<Home/>}></Route>
       </Routes>
-      </BrowserRouter>
       </main>
     </div>
   )

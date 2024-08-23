@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { DashboardLayout } from './components/DashboardLayout'
 import { AuthLayout } from './components/AuthLayout'
+import { BrowserRouter } from 'react-router-dom'
 
 function App() {
-  const [count, setCount] = useState(0)
   const [token, setToken] = useState(null)
 
   useEffect(() => {
@@ -15,9 +15,15 @@ function App() {
   }, [])
 
   return (
-    <>
-      {token ? <DashboardLayout /> : <AuthLayout />}
-    </>
+    <BrowserRouter>
+      {token ? (<DashboardLayout
+      setToken={setToken}
+      token={token}
+      />) : (<AuthLayout
+      setToken={setToken}
+      token={token}
+      />)}
+    </BrowserRouter>
   )
 }
 
