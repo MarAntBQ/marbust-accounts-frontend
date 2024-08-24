@@ -4,21 +4,44 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
 export const Register = () => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
+  const firstNameInput = useRef(null);
+  const lastNameInput = useRef(null);
   const emailInput = useRef(null);
+  const phoneInput = useRef(null);
   const passwordInput = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
+    if (!firstName) {
+      firstNameInput.current.focus();
+      setError('First name is required');
+      setLoading(false);
+      return;
+    }
+    if (!lastName) {
+      lastNameInput.current.focus();
+      setError('Last name is required');
+      setLoading(false);
+      return;
+    }
     if (!email) {
       emailInput.current.focus();
       setError('Email is required');
+      setLoading(false);
+      return;
+    }
+    if (!phone) {
+      phoneInput.current.focus();
+      setError('Phone is required');
       setLoading(false);
       return;
     }
@@ -29,21 +52,25 @@ export const Register = () => {
       return;
     }
     try {
-      const response = await axios.post('https://v2.accounts.marbust.com/api/login', new URLSearchParams({
-        email: email,
-        password: password,
-      }), {
+      const response = await axios.post('https://v2.accounts.marbust.com/api/register', {
+        firstName,
+        lastName,
+        email,
+        phone,
+        password,
+      }, {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
       });
-      setToken(response.data.token);
-      setError('¡Welcome back!');
+      setError('User registered successfully');
+      setFirstName('');
+      setLastName('');
       setEmail('');
+      setPhone('');
       setPassword('');
-      localStorage.setItem('token', response.data.token);
     } catch (err) {
-      setError('Invalid email or password');
+      setError('Registration failed');
     } finally {
       setLoading(false);
     }
@@ -56,6 +83,24 @@ export const Register = () => {
       {error && <p className='error'>{error}</p>}
       <form className='form form--auth' onSubmit={handleSubmit}>
           <input
+            type='text'
+            placeholder='First Name'
+            value={firstName}
+            name="firstName"
+            onChange={(e) => setFirstName(e.target.value)}
+            disabled={loading}
+            ref={firstNameInput}
+          />
+          <input
+            type='text'
+            placeholder='Last Name'
+            value={lastName}
+            name="lastName"
+            onChange={(e) => setLastName(e.target.value)}
+            disabled={loading}
+            ref={lastNameInput}
+          />
+          <input
             type='email'
             placeholder='Email'
             value={email}
@@ -63,6 +108,15 @@ export const Register = () => {
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
             ref={emailInput}
+          />
+          <input
+            type='text'
+            placeholder='Phone'
+            value={phone}
+            name='phone'
+            onChange={(e) => setPhone(e.target.value)}
+            disabled={loading}
+            ref={phoneInput}
           />
           <input
             type='password'
@@ -74,7 +128,7 @@ export const Register = () => {
             ref={passwordInput}
           />
           <button className='btn--center' type='submit' disabled={loading}>
-            {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Login'}
+            {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Register'}
           </button>
           <div className='form__link'>
             <Link to='/login'>Login</Link> <strong>|</strong> <Link to='/forget-password'>Forgot Password?</Link>

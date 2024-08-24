@@ -5,12 +5,12 @@ import { useNavigate, Link } from 'react-router-dom';
 
 export const ConfirmOTP = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
-  const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
   const emailInput = useRef(null);
-  const passwordInput = useRef(null);
+  const otpInput = useRef(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,28 +22,29 @@ export const ConfirmOTP = () => {
       setLoading(false);
       return;
     }
-    if (!password) {
-      passwordInput.current.focus();
-      setError('Password is required');
+    if (!otp) {
+      otpInput.current.focus();
+      setError('OTP is required');
       setLoading(false);
       return;
     }
     try {
-      const response = await axios.post('https://v2.accounts.marbust.com/api/login', new URLSearchParams({
+      const response = await axios.post('https://v2.accounts.marbust.com/api/verify-otp', {
         email: email,
-        password: password,
-      }), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
+        otpCode: otp,
       });
-      setToken(response.data.token);
-      setError('¡Welcome back!');
+      setError('OTP verified successfully!');
       setEmail('');
-      setPassword('');
-      localStorage.setItem('token', response.data.token);
-    } catch (err) {
-      setError('Invalid email or password');
+      setOtp('');
+      setTimeout(() => {
+        navigate('/login');
+      }, 1000);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unexpected error occurred.');
+      }
     } finally {
       setLoading(false);
     }
@@ -52,9 +53,9 @@ export const ConfirmOTP = () => {
   return (
     <div className='auth-layout__block auth-layout__block--login'>
       <div className="form__wrapper">
-      <h1>Confirm OTP <i className="fa-solid fa-right-to-bracket"></i></h1>
-      {error && <p className='error'>{error}</p>}
-      <form className='form form--auth' onSubmit={handleSubmit}>
+        <h1>Confirm OTP <i className="fa-solid fa-right-to-bracket"></i></h1>
+        {error && <p className='error'>{error}</p>}
+        <form className='form form--auth' onSubmit={handleSubmit}>
           <input
             type='email'
             placeholder='Email'
@@ -65,16 +66,16 @@ export const ConfirmOTP = () => {
             ref={emailInput}
           />
           <input
-            type='password'
-            placeholder='Password'
-            value={password}
-            name='password'
-            onChange={(e) => setPassword(e.target.value)}
+            type='text'
+            placeholder='OTP'
+            value={otp}
+            name='otp'
+            onChange={(e) => setOtp(e.target.value)}
             disabled={loading}
-            ref={passwordInput}
+            ref={otpInput}
           />
           <button className='btn--center' type='submit' disabled={loading}>
-            {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Login'}
+            {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Verify OTP'}
           </button>
           <div className='form__link'>
             <Link to='/login'>Login</Link> <strong>|</strong> <Link to='/register'>Create Account</Link>
@@ -82,5 +83,5 @@ export const ConfirmOTP = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
