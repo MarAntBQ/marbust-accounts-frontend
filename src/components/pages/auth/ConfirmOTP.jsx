@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import API from '../../../config/config';
 
 export const ConfirmOTP = () => {
   const [email, setEmail] = useState('');
@@ -29,7 +30,7 @@ export const ConfirmOTP = () => {
       return;
     }
     try {
-      const response = await axios.post('https://v2.accounts.marbust.com/api/verify-otp', {
+      const response = await axios.post(`${API.api}/verify-otp`, {
         email: email,
         otpCode: otp,
       });

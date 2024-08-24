@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import API from '../../../config/config';
 
 export const Login = ({ setToken, token }) => {
   const [email, setEmail] = useState('');
@@ -29,7 +30,7 @@ export const Login = ({ setToken, token }) => {
       return;
     }
     try {
-      const response = await axios.post('https://v2.accounts.marbust.com/api/login', new URLSearchParams({
+      const response = await axios.post(`${API.api}/login`, new URLSearchParams({
         email: email,
         password: password,
       }), {
@@ -38,12 +39,19 @@ export const Login = ({ setToken, token }) => {
         },
       });
       if (response.data && response.data.token) {
-        localStorage.setItem('loginToken', response.data.token);
-        setToken(response.data.token);
-        navigate('/dashboard');
+        setError('Login successfully!');
+        setTimeout(() => {
+          localStorage.setItem('loginToken', response.data.token);
+          setToken(response.data.token);
+          navigate('/dashboard');
+        }, 1000);
       }
-    } catch (err) {
-      setError('Invalid email or password');
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unexpected error occurred.');
+      }
     } finally {
       setLoading(false);
     }

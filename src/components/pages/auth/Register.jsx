@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import API from '../../../config/config';
 
 export const Register = () => {
   const [firstName, setFirstName] = useState('');
@@ -16,6 +17,7 @@ export const Register = () => {
   const emailInput = useRef(null);
   const phoneInput = useRef(null);
   const passwordInput = useRef(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,7 +54,7 @@ export const Register = () => {
       return;
     }
     try {
-      const response = await axios.post('https://v2.accounts.marbust.com/api/register', {
+      const response = await axios.post(`${API.api}/register`, {
         firstName,
         lastName,
         email,
@@ -63,14 +65,21 @@ export const Register = () => {
           'Content-Type': 'application/json',
         },
       });
-      setError('User registered successfully');
       setFirstName('');
       setLastName('');
       setEmail('');
       setPhone('');
       setPassword('');
-    } catch (err) {
-      setError('Registration failed');
+      setError('User registered successfully');
+      setTimeout(() => {
+        navigate('/confirm-otp');
+      }, 1000);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unexpected error occurred.');
+      }
     } finally {
       setLoading(false);
     }

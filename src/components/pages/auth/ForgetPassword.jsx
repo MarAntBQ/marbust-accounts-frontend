@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import API from '../../../config/config';
 
 export const ForgetPassword = () => {
   const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ export const ForgetPassword = () => {
       return;
     }
     try {
-      const response = await axios.post('https://v2.accounts.marbust.com/api/request-password-reset', new URLSearchParams({
+      const response = await axios.post(`${API.api}/request-password-reset`, new URLSearchParams({
         email: email,
       }), {
         headers: {
