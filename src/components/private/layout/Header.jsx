@@ -1,5 +1,6 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { User } from './User';
 
 export const Header = ({ setToken }) => {
   const navigate = useNavigate();
@@ -10,9 +11,10 @@ export const Header = ({ setToken }) => {
   }
   return (
     <header>
+      <User/>
         <nav>
             <ul>
-                <li><a href='./'>Inicio</a></li>
+                <li><NavLink to="/dashboard">Inicio</NavLink></li>
                 <li><a href='./'>Administración del Sistema</a>
                   <ul>
                     <li><a href='./'>Usuarios</a></li>

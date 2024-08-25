@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header } from './layout/Header'
-import { Route, Routes } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { Home } from './pages/Home'
 
 export const DashboardLayout = ({ setToken, token }) => {
@@ -8,10 +8,11 @@ export const DashboardLayout = ({ setToken, token }) => {
     <div className='dashboard'>
       <Header setToken={setToken}/>
       <main>
-      <Routes>
+      <Outlet/>
+      {/* <Routes>
         <Route path='/dashboard' element={<Home/>}/>
         <Route path="*" element={<Home/>}></Route>
-      </Routes>
+      </Routes> */}
       </main>
     </div>
   )
