@@ -17,7 +17,7 @@ export const User = () => {
         <ul className={`header-profile__options ${isMenuOpen ? 'header-profile__options--open' : ''}`}>
           <li><NavLink to="/dashboard/my-account">Mi Perfil</NavLink></li>
           <li><NavLink to="/dashboard/my-account/change-password">Editar Password</NavLink></li>
-          <li><a>Logout</a></li>
+          <li><NavLink to="/login">Cerrar Sesión</NavLink></li>
         </ul>
     </div>
   )
