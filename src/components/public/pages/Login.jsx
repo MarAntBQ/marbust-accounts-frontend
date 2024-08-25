@@ -42,7 +42,7 @@ export const Login = ({ setToken, token }) => {
         setError('Login successfully!');
         setTimeout(() => {
           localStorage.setItem('loginToken', response.data.token);
-          setToken(response.data.token);
+          //setToken(response.data.token);
           navigate('/dashboard');
         }, 1000);
       }
