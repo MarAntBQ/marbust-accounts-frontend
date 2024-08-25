@@ -9,6 +9,7 @@ export const Header = ({ setToken }) => {
     setToken(null)
     navigate('/login');
   }
+  console.log('Header component rendered');
   return (
     <header>
       <User/>
