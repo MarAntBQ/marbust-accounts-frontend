@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API from '../../../config/config';
 
-export const User = () => {
+export const User = ({ setToken }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+
+
+  const handleLogout = () => {
+    console.log('Logging out');
+    localStorage.removeItem('loginToken')
+    //setToken(null)
+    navigate('/login');
+  }
 
   const toggleMenu = () => {
     console.log("toggleMenu");
@@ -46,7 +55,7 @@ export const User = () => {
       <ul className={`header-profile__options ${isMenuOpen ? 'header-profile__options--open' : ''}`}>
         <li><NavLink to="/dashboard/my-account">Mi Perfil</NavLink></li>
         <li><NavLink to="/dashboard/my-account/change-password">Editar Password</NavLink></li>
-        <li><NavLink to="/login">Cerrar Sesión</NavLink></li>
+        <li><a onClick={handleLogout}>Cerrar Sesión</a></li>
       </ul>
     </div>
   );

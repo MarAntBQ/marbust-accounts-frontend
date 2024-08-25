@@ -1,14 +1,8 @@
 import React from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { User } from './User';
 
 export const Header = ({ setToken }) => {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem('loginToken')
-    setToken(null)
-    navigate('/login');
-  }
   console.log('Header component rendered');
   return (
     <header>
@@ -25,7 +19,6 @@ export const Header = ({ setToken }) => {
                 </li>
             </ul>
         </nav>
-        <a href='#' onClick={handleLogout}>Cerrar Sesión</a>
     </header>
   )
 }
