@@ -5,8 +5,13 @@ import { Login } from '../components/public/pages/Login'
 import { Register } from '../components/public/pages/Register'
 import { ForgetPassword } from '../components/public/pages/ForgetPassword'
 import { ConfirmOTP } from '../components/public/pages/ConfirmOTP'
+// Dashboard Components
 import { DashboardLayout } from '../components/private/DashboardLayout'
 import { Home } from '../components/private/pages/Home'
+import MyAccountLayout from '../components/private/pages/user/MyAccountLayout';
+import { MyProfile } from '../components/private/pages/user/MyProfile'
+import { ChangePassword } from '../components/private/pages/user/ChangePassword'
+import { EditMyProfile } from '../components/private/pages/user/EditMyProfile'
 
 export const Routing = () => {
   return (
@@ -21,9 +26,15 @@ export const Routing = () => {
             </Route>
             <Route path="/dashboard" element={<DashboardLayout/>}>
                 <Route index element={<Home/>}/>
+                <Route path='my-account' element={<MyAccountLayout />}>
+                  <Route index element={<MyProfile/>}/>
+                  <Route path='edit' element={<EditMyProfile/>}/>
+                  <Route path='change-password' element={<ChangePassword/>}/>
+                  <Route path='*' element={<MyProfile/>}/>
+                </Route>
                 <Route path="*" element={<Home/>}/>
             </Route>
         </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
