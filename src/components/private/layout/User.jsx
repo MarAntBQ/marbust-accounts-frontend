@@ -47,8 +47,8 @@ export const User = ({ setToken }) => {
   }, []);
 
   return (
-    <div className='header-profile'>
-      <div className="header-profile__section" onClick={toggleMenu}>
+    <div className='header-profile' onClick={toggleMenu}>
+      <div className="header-profile__section">
         <img src='/img/public/header/profile-ico.png' alt='Default User Icon'/>
         <p>{userData ? userData.firstName : 'User'}</p>
       </div>
