@@ -39,6 +39,7 @@ export const User = ({ setToken }) => {
         console.log('User profile:', response.data);
         setUserData(response.data); // Acceder a los datos directamente en response.data
       } catch (error) {
+        navigate('/login');
         console.error('Error fetching user profile:', error);
       }
     };
