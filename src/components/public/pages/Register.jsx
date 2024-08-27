@@ -3,7 +3,6 @@ import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import API from '../../../config/config';
 import { useForm } from '../../../hooks/useForm';
 import Global from '../../../helpers/Global';
 
@@ -15,7 +14,10 @@ export const Register = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [formMessage, setFormMessage] = useState({
+    type: '',
+    message: ''
+  });
   const [loading, setLoading] = useState(false);
   const firstNameInput = useRef(null);
   const lastNameInput = useRef(null);
@@ -24,92 +26,62 @@ export const Register = () => {
   const passwordInput = useRef(null);
   const navigate = useNavigate();
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setError('');
-  //   setLoading(true);
-  //   if (!firstName) {
-  //     firstNameInput.current.focus();
-  //     setError('First name is required');
-  //     setLoading(false);
-  //     return;
-  //   }
-  //   if (!lastName) {
-  //     lastNameInput.current.focus();
-  //     setError('Last name is required');
-  //     setLoading(false);
-  //     return;
-  //   }
-  //   if (!email) {
-  //     emailInput.current.focus();
-  //     setError('Email is required');
-  //     setLoading(false);
-  //     return;
-  //   }
-  //   if (!phone) {
-  //     phoneInput.current.focus();
-  //     setError('Phone is required');
-  //     setLoading(false);
-  //     return;
-  //   }
-  //   if (!password) {
-  //     passwordInput.current.focus();
-  //     setError('Password is required');
-  //     setLoading(false);
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axios.post(`${API.api}/register`, {
-  //       firstName,
-  //       lastName,
-  //       email,
-  //       phone,
-  //       password,
-  //     }, {
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     });
-  //     setFirstName('');
-  //     setLastName('');
-  //     setEmail('');
-  //     setPhone('');
-  //     setPassword('');
-  //     setError('User registered successfully');
-  //     setTimeout(() => {
-  //       navigate('/confirm-otp');
-  //     }, 1000);
-  //   } catch (error) {
-  //     if (error.response && error.response.data && error.response.data.message) {
-  //       setError(error.response.data.message);
-  //     } else {
-  //       setError('An unexpected error occurred.');
-  //     }
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const createAccount = async(e) => {
     e.preventDefault();
     let newUser = form;
-    const request = await fetch(`${Global.url}/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newUser)
-    });
-    const data = await request.json();
 
-    console.log(data);
-    if (data.error) {
-      setError(data.error);
-    } else {
-      setError('Usuario registrado exitosamente');
+    setFormMessage({});
+    setLoading(true);
+    if (!newUser.firstName) {
+      firstNameInput.current.focus();
+      setFormMessage({ type: 'error', message: "Nombre es requerido" });
+      setLoading(false);
+      return;
+    }
+    if (!newUser.lastName) {
+      lastNameInput.current.focus();
+      setFormMessage({ type: 'error', message: "Apellido es requerido" });
+      setLoading(false);
+      return;
+    }
+    if (!newUser.email) {
+      emailInput.current.focus();
+      setFormMessage({ type: 'error', message: "Email es requerido" });
+      setLoading(false);
+      return;
+    }
+    if (!newUser.phone) {
+      phoneInput.current.focus();
+      setFormMessage({ type: 'error', message: "Teléfono es requerido" });
+      setLoading(false);
+      return;
+    }
+    if (!newUser.password) {
+      passwordInput.current.focus();
+      setFormMessage({ type: 'error', message: "Contraseña es requerida" });
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${Global.url}/register`, newUser, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPhone('');
+      setPassword('');
+      setFormMessage({ type: 'success', message: response.data.message });
       setTimeout(() => {
         navigate('/confirm-otp');
-      }, 1000);
+      }, 2500);
+    } catch (error) {
+      setFormMessage({ type: 'error', message: error.response.data.error });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -117,7 +89,11 @@ export const Register = () => {
     <div className='auth-layout__block auth-layout__block--login'>
       <div className="form__wrapper">
       <h1>Crear Cuenta <i className="fa-solid fa-right-to-bracket"></i></h1>
-      {error && <p className='error'>{error}</p>}
+      {formMessage.message && (
+        <p className={`form-message form-message--${formMessage.type}`}>
+          {formMessage.message}
+        </p>
+      )}
       <form className='form form--auth' onSubmit={createAccount}>
           <input
             type='text'
@@ -125,7 +101,6 @@ export const Register = () => {
             name="firstName"
             disabled={loading}
             ref={firstNameInput}
-            required
             onChange={changed}
           />
           <input
@@ -134,7 +109,6 @@ export const Register = () => {
             name="lastName"
             disabled={loading}
             ref={lastNameInput}
-            required
             onChange={changed}
           />
           <input
@@ -143,7 +117,6 @@ export const Register = () => {
             name="email"
             disabled={loading}
             ref={emailInput}
-            required
             onChange={changed}
           />
           <input
@@ -152,7 +125,6 @@ export const Register = () => {
             name='phone'
             disabled={loading}
             ref={phoneInput}
-            required
             onChange={changed}
           />
           <input
@@ -161,7 +133,6 @@ export const Register = () => {
             name='password'
             disabled={loading}
             ref={passwordInput}
-            required
             onChange={changed}
           />
           <button className='btn--center' type='submit' disabled={loading}>
