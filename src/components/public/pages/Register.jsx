@@ -103,6 +103,14 @@ export const Register = () => {
     const data = await request.json();
 
     console.log(data);
+    if (data.error) {
+      setError(data.error);
+    } else {
+      setError('Usuario registrado exitosamente');
+      setTimeout(() => {
+        navigate('/confirm-otp');
+      }, 1000);
+    }
   }
 
   return (
