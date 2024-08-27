@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -9,11 +8,6 @@ import Global from '../../../helpers/Global';
 export const Register = () => {
   const { form, changed } = useForm({})
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
   const [formMessage, setFormMessage] = useState({
     type: '',
     message: ''
@@ -69,17 +63,21 @@ export const Register = () => {
           'Content-Type': 'application/json',
         },
       });
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setPhone('');
-      setPassword('');
+      firstNameInput.current.value='';
+      lastNameInput.current.value='';
+      emailInput.current.value='';
+      phoneInput.current.value='';
+      passwordInput.current.value='';
       setFormMessage({ type: 'success', message: response.data.message });
       setTimeout(() => {
         navigate('/confirm-otp');
-      }, 2500);
+      }, 1000);
     } catch (error) {
-      setFormMessage({ type: 'error', message: error.response.data.error });
+      if (error.response && error.response.data && error.response.data.error) {
+        setFormMessage({ type: 'error', message: error.response.data.error });
+      } else {
+        setFormMessage({ type: 'error', message: 'Ocurrió un error inesperado.' });
+      }
     } finally {
       setLoading(false);
     }
