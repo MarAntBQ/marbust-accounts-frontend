@@ -2,12 +2,17 @@ import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import API from '../../../config/config';
+import { useForm } from '../../../hooks/useForm';
+import Global from '../../../helpers/Global';
 
 export const Login = ({ setToken, token }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const { form, changed } = useForm({})
+
+  const [formMessage, setFormMessage] = useState({
+    type: '',
+    message: ''
+  });
+
   const [loading, setLoading] = useState(false);
   const emailInput = useRef(null);
   const passwordInput = useRef(null);
@@ -15,42 +20,40 @@ export const Login = ({ setToken, token }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    let newLogin = form;
+    setFormMessage({});
     setLoading(true);
-    if (!email) {
+    if (!newLogin.email) {
       emailInput.current.focus();
-      setError('Email is required');
+      setFormMessage({ type: 'error', message: "Email es requerido" });
       setLoading(false);
       return;
     }
-    if (!password) {
+    if (!newLogin.password) {
       passwordInput.current.focus();
-      setError('Password is required');
+      setFormMessage({ type: 'error', message: "Contraseña es requerida" });
       setLoading(false);
       return;
     }
     try {
-      const response = await axios.post(`${API.api}/login`, new URLSearchParams({
-        email: email,
-        password: password,
-      }), {
+      const response = await axios.post(`${Global.url}/login`, newLogin, {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
       });
-      if (response.data && response.data.token) {
-        setError('Login successfully!');
-        setTimeout(() => {
-          localStorage.setItem('loginToken', response.data.token);
-          //setToken(response.data.token);
-          navigate('/dashboard');
-        }, 1000);
-      }
+      setFormMessage({ type: 'success', message: response.data.message });
+      emailInput.current.value = '';
+      passwordInput.current.value = '';
+      setTimeout(() => {
+        localStorage.setItem('loginToken', response.data.token);
+        //setToken(response.data.token);
+        navigate('/dashboard');
+      }, 1000);
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        setError(error.response.data.message);
+      if (error.response && error.response.data && error.response.data.error) {
+        setFormMessage({ type: 'error', message: error.response.data.error });
       } else {
-        setError('An unexpected error occurred.');
+        setFormMessage({ type: 'error', message: 'Ocurrió un error inesperado.' });
       }
     } finally {
       setLoading(false);
@@ -60,26 +63,28 @@ export const Login = ({ setToken, token }) => {
   return (
     <div className='auth-layout__block auth-layout__block--login'>
       <div className="form__wrapper">
-      <h1>Sign In <i className="fa-solid fa-right-to-bracket"></i></h1>
-      {error && <p className='error'>{error}</p>}
+      <h1>Iniciar Sesión <i className="fa-solid fa-right-to-bracket"></i></h1>
+      {formMessage.message && (
+          <p className={`form-message form-message--${formMessage.type}`}>
+            {formMessage.message}
+            </p>
+          )}
       <form className='form form--auth' onSubmit={handleSubmit}>
           <input
             type='email'
             placeholder='Email'
-            value={email}
             name="email"
-            onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
             ref={emailInput}
+            onChange={changed}
           />
           <input
             type='password'
-            placeholder='Password'
-            value={password}
+            placeholder='Contraseña'
             name='password'
-            onChange={(e) => setPassword(e.target.value)}
             disabled={loading}
             ref={passwordInput}
+            onChange={changed}
           />
           <button className='btn--center' type='submit' disabled={loading}>
             {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Login'}
