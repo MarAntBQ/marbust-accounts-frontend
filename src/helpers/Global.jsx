@@ -9,4 +9,4 @@ const Global = {
   }
 }
 
-export default Global.local;
+export default Global.production;

@@ -28,7 +28,7 @@ export const ConfirmOTP = () => {
       setLoading(false);
       return;
     }
-    if (!newOTPRedeem.otp) {
+    if (!newOTPRedeem.otpCode) {
       otpInput.current.focus();
       setFormMessage({ type: 'error', message: "Código OTP es requerido" });
       setLoading(false);
