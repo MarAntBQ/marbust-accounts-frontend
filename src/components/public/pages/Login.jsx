@@ -4,8 +4,10 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from '../../../hooks/useForm';
 import Global from '../../../helpers/Global';
+import useAuth from '../../../hooks/useAuth';
 
-export const Login = ({ setToken, token }) => {
+export const Login = () => {
+
   const { form, changed } = useForm({})
 
   const [formMessage, setFormMessage] = useState({

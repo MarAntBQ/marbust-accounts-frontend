@@ -12,10 +12,12 @@ import MyAccountLayout from '../components/private/pages/user/MyAccountLayout';
 import { MyProfile } from '../components/private/pages/user/MyProfile'
 import { ChangePassword } from '../components/private/pages/user/ChangePassword'
 import { EditMyProfile } from '../components/private/pages/user/EditMyProfile'
+import { AuthProvider } from '../components/AuthProvider'
 
 export const Routing = () => {
   return (
     <BrowserRouter>
+      <AuthProvider>
         <Routes>
             <Route path="/" element={<AuthLayout/>}>
                 <Route index element={<Login/>}/>
@@ -35,6 +37,7 @@ export const Routing = () => {
                 <Route path="*" element={<Home/>}/>
             </Route>
         </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

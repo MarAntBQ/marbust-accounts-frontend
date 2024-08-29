@@ -2,8 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 import { User } from './User';
 
-export const Header = ({ setToken }) => {
-  console.log('Header component rendered');
+export const Header = () => {
   return (
     <header>
       <User/>

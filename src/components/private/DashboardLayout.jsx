@@ -2,11 +2,11 @@ import React from 'react'
 import { Header } from './layout/Header'
 import { Outlet } from 'react-router-dom'
 
-export const DashboardLayout = ({ setToken, token }) => {
+export const DashboardLayout = () => {
   console.log('DashboardLayout component rendered');
   return (
     <div className='dashboard'>
-      <Header setToken={setToken}/>
+      <Header/>
       <main>
       <Outlet/>
       </main>
