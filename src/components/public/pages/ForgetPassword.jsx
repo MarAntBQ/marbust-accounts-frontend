@@ -2,45 +2,49 @@ import React from 'react';
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import API from '../../../config/config';
+import { useForm } from '../../../hooks/useForm';
+import Global from '../../../helpers/Global';
 
 export const ForgetPassword = () => {
+  const { form, changed } = useForm({})
+
+  const [formMessage, setFormMessage] = useState({
+    type: '',
+    message: ''
+  });
+
   const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const emailInput = useRef(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    let newForgot = form;
+    setFormMessage({});
     setLoading(true);
-    if (!email) {
+    if (!newForgot.email) {
       emailInput.current.focus();
-      setError('Email is required');
+      setFormMessage({ type: 'error', message: "Email es requerido" });
       setLoading(false);
       return;
     }
     try {
-      const response = await axios.post(`${API.api}/request-password-reset`, new URLSearchParams({
-        email: email,
-      }), {
+      const response = await axios.post(`${Global.url}/request-password-reset`, newForgot, {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
       });
-      if (response.data && response.data.message) {
-        setError(response.data.message); // Mensaje de éxito
-      }
-      setEmail('');
+      setFormMessage({ type: 'success', message: response.data.message });
+      emailInput.current.value = '';
       setTimeout(() => {
         navigate('/login');
       }, 1000);
-    } catch (err) {
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        setFormMessage({ type: 'error', message: error.response.data.error });
       } else {
-        setError('An unexpected error occurred');
+        setFormMessage({ type: 'error', message: 'Ocurrió un error inesperado.' });
       }
     } finally {
       setLoading(false);
@@ -51,16 +55,19 @@ export const ForgetPassword = () => {
     <div className='auth-layout__block auth-layout__block--login'>
       <div className="form__wrapper">
       <h1>Forget Password <i className="fa-solid fa-right-to-bracket"></i></h1>
-      {error && <p className='error'>{error}</p>}
+      {formMessage.message && (
+          <p className={`form-message form-message--${formMessage.type}`}>
+            {formMessage.message}
+            </p>
+          )}
       <form className='form form--auth' onSubmit={handleSubmit}>
           <input
             type='email'
             placeholder='Email'
-            value={email}
             name="email"
-            onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
             ref={emailInput}
+            onChange={changed}
           />
           <button className='btn--center' type='submit' disabled={loading}>
             {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Reset Password'}
