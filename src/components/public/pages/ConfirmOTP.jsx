@@ -58,7 +58,7 @@ export const ConfirmOTP = () => {
   };
 
   return (
-    <div className='auth-layout__block auth-layout__block--login'>
+    <div className='auth-layout__block'>
       <div className="form__wrapper">
         <h1>Verificación de OTP <i className="fa-solid fa-right-to-bracket"></i></h1>
         {formMessage.message && (

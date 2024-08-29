@@ -7,6 +7,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
 
     const [auth, setAuth] = useState({});
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
       authUser();
@@ -18,6 +19,7 @@ export const AuthProvider = ({children}) => {
       const user = localStorage.getItem('user');
       // Check if token exists and user
       if (!token || !user) {
+        setLoading(false);
         return false;
       }
       
@@ -29,7 +31,8 @@ export const AuthProvider = ({children}) => {
           }
         });
         // Set user data in the state
-        setAuth(response.data);  
+        setAuth(response.data);
+        setLoading(false);
       }
       catch (error) {
         console.error('Error fetching user profile:', error.response.data.error);
@@ -39,7 +42,7 @@ export const AuthProvider = ({children}) => {
     }
 
   return (<AuthContext.Provider
-    value={{auth,setAuth
+    value={{auth,setAuth, loading, setLoading
     }}
   >
     {children}

@@ -50,7 +50,6 @@ export const Login = () => {
       setTimeout(() => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        //setToken(response.data.token);
         //navigate('/dashboard');
       }, 1000);
     } catch (error) {
@@ -64,20 +63,8 @@ export const Login = () => {
     }
   };
 
-  useEffect(() => {
-    const verifyToken = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        navigate('/dashboard');
-        return;
-      }
-    };
-
-    verifyToken();
-  }, []);
-
   return (
-    <div className='auth-layout__block auth-layout__block--login'>
+    <div className='auth-layout__block'>
       <div className="form__wrapper">
       <h1>Iniciar Sesión <i className="fa-solid fa-right-to-bracket"></i></h1>
       {formMessage.message && (
