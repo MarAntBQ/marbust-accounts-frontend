@@ -5,7 +5,7 @@ const Global = {
   },
   production: {
     url: 'https://api.accounts.marbust.com',
-    app: 'https://accounts.marbust.com/',
+    app: 'https://accounts.marbust.com',
   }
 }
 
