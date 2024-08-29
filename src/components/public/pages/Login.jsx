@@ -41,13 +41,14 @@ export const Login = ({ setToken, token }) => {
           'Content-Type': 'application/json',
         },
       });
+      console.log(response.data);
       setFormMessage({ type: 'success', message: response.data.message });
       emailInput.current.value = '';
       passwordInput.current.value = '';
       setTimeout(() => {
         localStorage.setItem('loginToken', response.data.token);
         //setToken(response.data.token);
-        navigate('/dashboard');
+        //navigate('/dashboard');
       }, 1000);
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
