@@ -6,13 +6,14 @@ export const User = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const {auth} = useAuth();
+  const {auth, setAuth} = useAuth();
   console.log(auth);
 
 
   const handleLogout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
+    setAuth({});
     navigate('/login');
   }
 

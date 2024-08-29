@@ -25,6 +25,7 @@ export const Routing = () => {
                 <Route path='register' element={<Register/>}/>
                 <Route path='forget-password' element={<ForgetPassword/>}/>
                 <Route path='confirm-otp' element={<ConfirmOTP/>}/>
+                <Route path='*' element={<Navigate to = '/login'/>}/>
             </Route>
             <Route path="/dashboard" element={<DashboardLayout/>}>
                 <Route index element={<Home/>}/>

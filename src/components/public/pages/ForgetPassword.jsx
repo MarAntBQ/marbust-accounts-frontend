@@ -38,23 +38,23 @@ export const ForgetPassword = () => {
       setFormMessage({ type: 'success', message: response.data.message });
       emailInput.current.value = '';
       setTimeout(() => {
+        setLoading(false);
         navigate('/login');
-      }, 1000);
+      }, 3000);
     } catch (error) {
+      setLoading(false);
       if (error.response && error.response.data && error.response.data.error) {
         setFormMessage({ type: 'error', message: error.response.data.error });
       } else {
         setFormMessage({ type: 'error', message: 'Ocurrió un error inesperado.' });
       }
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <div className='auth-layout__block'>
       <div className="form__wrapper">
-      <h1>Forget Password <i className="fa-solid fa-right-to-bracket"></i></h1>
+      <h1>Olvide mi Contraseña <i className="fa-solid fa-right-to-bracket"></i></h1>
       {formMessage.message && (
           <p className={`form-message form-message--${formMessage.type}`}>
             {formMessage.message}
@@ -73,7 +73,7 @@ export const ForgetPassword = () => {
             {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Reset Password'}
           </button>
           <div className='form__link'>
-            <Link to='/login'>Login</Link> <strong>|</strong> <Link to='/register'>Create Account</Link>
+            <Link to='/login'>Iniciar Sesión</Link> <strong>|</strong> <Link to='/register'>Crear Cuenta</Link>
           </div>
         </form>
       </div>

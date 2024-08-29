@@ -44,16 +44,16 @@ export const ConfirmOTP = () => {
       emailInput.current.value = '';
       otpInput.current.value = '';
       setTimeout(() => {
+        setLoading(false);
         navigate('/login');
-      }, 1000);
+      }, 1500);
     } catch (error) {
+      setLoading(false);
       if (error.response && error.response.data && error.response.data.error) {
         setFormMessage({ type: 'error', message: error.response.data.error });
       } else {
         setFormMessage({ type: 'error', message: 'Ocurrió un error inesperado.' });
       }
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -87,7 +87,7 @@ export const ConfirmOTP = () => {
             {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Verify OTP'}
           </button>
           <div className='form__link'>
-            <Link to='/login'>Login</Link> <strong>|</strong> <Link to='/register'>Create Account</Link>
+            <Link to='/login'>Iniciar Sesión</Link> <strong>|</strong> <Link to='/register'>Crear Cuenta</Link>
           </div>
         </form>
       </div>

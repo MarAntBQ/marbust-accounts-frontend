@@ -70,16 +70,16 @@ export const Register = () => {
       passwordInput.current.value='';
       setFormMessage({ type: 'success', message: response.data.message });
       setTimeout(() => {
+        setLoading(false);
         navigate('/confirm-otp');
-      }, 1000);
+      }, 2000);
     } catch (error) {
+      setLoading(false);
       if (error.response && error.response.data && error.response.data.error) {
         setFormMessage({ type: 'error', message: error.response.data.error });
       } else {
         setFormMessage({ type: 'error', message: 'Ocurrió un error inesperado.' });
       }
-    } finally {
-      setLoading(false);
     }
   }
 

@@ -8,6 +8,8 @@ import useAuth from '../../../hooks/useAuth';
 
 export const Login = () => {
 
+  const {setAuth} = useAuth();
+
   const { form, changed } = useForm({})
 
   const [formMessage, setFormMessage] = useState({
@@ -43,23 +45,26 @@ export const Login = () => {
           'Content-Type': 'application/json',
         },
       });
-      console.log(response.data);
       setFormMessage({ type: 'success', message: response.data.message });
       emailInput.current.value = '';
       passwordInput.current.value = '';
       setTimeout(() => {
+        // Set user data in the Local Storage
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        //navigate('/dashboard');
-      }, 1000);
+        // Set user data in the state
+        setAuth(response.data.user);
+        setLoading(false);
+        // Redirect to the dashboard
+        navigate('/dashboard');
+      }, 2000);
     } catch (error) {
+      setLoading(false);
       if (error.response && error.response.data && error.response.data.error) {
         setFormMessage({ type: 'error', message: error.response.data.error });
       } else {
         setFormMessage({ type: 'error', message: 'Ocurrió un error inesperado.' });
       }
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -93,7 +98,7 @@ export const Login = () => {
             {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Login'}
           </button>
           <div className='form__link'>
-          <Link to='/forget-password'>Forgot password?</Link> <strong>|</strong> <Link to='/register'>Create Account</Link>
+          <Link to='/forget-password'>Olvide mi Contraseña</Link> <strong>|</strong> <Link to='/register'>Crear Cuenta</Link>
           </div>
         </form>
       </div>
