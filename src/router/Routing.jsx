@@ -33,9 +33,8 @@ export const Routing = () => {
                   <Route index element={<MyProfile/>}/>
                   <Route path='edit' element={<EditMyProfile/>}/>
                   <Route path='change-password' element={<ChangePassword/>}/>
-                  <Route path='*' element={<MyProfile/>}/>
                 </Route>
-                <Route path="*" element={<Home/>}/>
+                <Route path="*" element={<Navigate to = '/dashboard'/>}/>
             </Route>
         </Routes>
       </AuthProvider>
