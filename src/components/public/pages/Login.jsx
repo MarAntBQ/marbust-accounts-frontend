@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from '../../../hooks/useForm';
@@ -46,7 +46,8 @@ export const Login = ({ setToken, token }) => {
       emailInput.current.value = '';
       passwordInput.current.value = '';
       setTimeout(() => {
-        localStorage.setItem('loginToken', response.data.token);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
         //setToken(response.data.token);
         //navigate('/dashboard');
       }, 1000);
@@ -60,6 +61,18 @@ export const Login = ({ setToken, token }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        navigate('/dashboard');
+        return;
+      }
+    };
+
+    verifyToken();
+  }, []);
 
   return (
     <div className='auth-layout__block auth-layout__block--login'>

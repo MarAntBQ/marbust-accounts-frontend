@@ -11,7 +11,7 @@ export const User = ({ setToken }) => {
 
   const handleLogout = () => {
     console.log('Logging out');
-    localStorage.removeItem('loginToken')
+    localStorage.removeItem('token')
     //setToken(null)
     navigate('/login');
   }
@@ -24,9 +24,10 @@ export const User = ({ setToken }) => {
   useEffect(() => {
     console.log('User component mounted');
     const fetchUserProfile = async () => {
-      const token = localStorage.getItem('loginToken');
+      const token = localStorage.getItem('token');
       if (!token) {
         console.error('No token found');
+        navigate('/login');
         return;
       }
 
