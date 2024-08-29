@@ -36,6 +36,8 @@ export const Home = () => {
         {updates.map(update => (
           <li key={update.id} className="update-item">
           <div className="update-title">{update.title}:</div>
+          <div className="update-date">Fecha: <strong>{update.date}</strong></div>
+          <br />
           <div className="update-description">{update.description}</div>
           <div className="update-date">Reportado por: {update.createdBy}</div>
         </li>
