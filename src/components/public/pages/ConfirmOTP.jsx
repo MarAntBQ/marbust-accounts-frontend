@@ -78,7 +78,7 @@ export const ConfirmOTP = () => {
           <input
             type='text'
             placeholder='OTP'
-            name='otp'
+            name='otpCode'
             disabled={loading}
             ref={otpInput}
             onChange={changed}
