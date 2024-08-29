@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import API from '../../../config/config';
+import Global from '../../../helpers/Global';
 
 export const User = ({ setToken }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +32,7 @@ export const User = ({ setToken }) => {
       }
 
       try {
-        const response = await axios.get(`${API.api}/profile`, {
+        const response = await axios.get(`${Global.url}/profile`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
