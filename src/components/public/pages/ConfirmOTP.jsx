@@ -84,7 +84,7 @@ export const ConfirmOTP = () => {
             onChange={changed}
           />
           <button className='btn--center' type='submit' disabled={loading}>
-            {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Verify OTP'}
+            {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Verificar'}
           </button>
           <div className='form__link'>
             <Link to='/login'>Iniciar Sesión</Link> <strong>|</strong> <Link to='/register'>Crear Cuenta</Link>

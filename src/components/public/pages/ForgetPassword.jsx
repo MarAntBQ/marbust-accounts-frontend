@@ -70,7 +70,7 @@ export const ForgetPassword = () => {
             onChange={changed}
           />
           <button className='btn--center' type='submit' disabled={loading}>
-            {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Reset Password'}
+            {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Recuperar Contraseña'}
           </button>
           <div className='form__link'>
             <Link to='/login'>Iniciar Sesión</Link> <strong>|</strong> <Link to='/register'>Crear Cuenta</Link>

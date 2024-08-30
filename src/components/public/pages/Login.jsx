@@ -95,7 +95,7 @@ export const Login = () => {
             onChange={changed}
           />
           <button className='btn--center' type='submit' disabled={loading}>
-            {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Login'}
+            {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Ingresar'}
           </button>
           <div className='form__link'>
           <Link to='/forget-password'>Olvide mi Contraseña</Link> <strong>|</strong> <Link to='/register'>Crear Cuenta</Link>
