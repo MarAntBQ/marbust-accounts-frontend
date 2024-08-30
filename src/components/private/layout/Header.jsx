@@ -15,7 +15,7 @@ export const Header = () => {
   };
 
   return (
-    <header>
+    <header className='header--open'>
       <User />
       <nav>
         <ul>
