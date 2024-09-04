@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { User } from './User';
 import useAuth from '../../../hooks/useAuth';
 
-export const Header = () => {
+export const Header = ({ isMenuVisible }) => {
   const { auth } = useAuth();
   const [openMenus, setOpenMenus] = useState({});
 
@@ -15,7 +15,7 @@ export const Header = () => {
   };
 
   return (
-    <header className='header--open'>
+    <header className={isMenuVisible ? 'header--open' : ''}>
       <User />
       <nav>
         <ul>
