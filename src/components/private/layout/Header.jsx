@@ -28,25 +28,20 @@ export const Header = ({ isMenuVisible }) => {
                   Administración del Sistema <i className={`fas fa-chevron-${openMenus['admin'] ? 'up' : 'down'}`}></i>
                 </a>
                 <ul className={`submenu ${openMenus['admin'] ? 'open' : ''}`}>
-                  <li><a href='./'>Usuarios</a></li>
-                  <li><a href='./'>Roles</a></li>
-                  <li><a href='./'>Permisos</a></li>
+                  <li><NavLink to='./'>Usuarios</NavLink></li>
+                  <li><NavLink to='./'>Roles</NavLink></li>
+                  <li><NavLink to='./'>Permisos</NavLink></li>
                 </ul>
               </li>
               <hr />
             </>
           )}
+          <li><NavLink to="/dashboard/marbust-education">Marbust Education</NavLink></li>
           <li><NavLink to="./">Marbust Computers</NavLink></li>
           <li><NavLink to="./">MBHostCloud</NavLink></li>
           <li><NavLink to="./">Marbust Sites</NavLink></li>
           <li><NavLink to="./">Marbust News</NavLink></li>
           <li><NavLink to="./">Marbust Ads</NavLink></li>
-          <li><NavLink to="./">Marbust Support</NavLink></li>
-          <li><NavLink to="./">Marbust Support</NavLink></li>
-          <li><NavLink to="./">Marbust Support</NavLink></li>
-          <li><NavLink to="./">Marbust Support</NavLink></li>
-          <li><NavLink to="./">Marbust Support</NavLink></li>
-          <li><NavLink to="./">Marbust Support</NavLink></li>
         </ul>
       </nav>
     </header>

@@ -8,6 +8,7 @@ import { ConfirmOTP } from '../components/public/pages/ConfirmOTP'
 // Dashboard Components
 import { DashboardLayout } from '../components/private/DashboardLayout'
 import { Home } from '../components/private/pages/Home'
+import { MarbustEducation } from '../components/private/pages/MarbustEducation'
 import MyAccountLayout from '../components/private/pages/user/MyAccountLayout';
 import { MyProfile } from '../components/private/pages/user/MyProfile'
 import { ChangePassword } from '../components/private/pages/user/ChangePassword'
@@ -29,6 +30,7 @@ export const Routing = () => {
             </Route>
             <Route path="/dashboard" element={<DashboardLayout/>}>
                 <Route index element={<Home/>}/>
+                <Route path='marbust-education' element={<MarbustEducation/>}/>
                 <Route path='my-account' element={<MyAccountLayout />}>
                   <Route index element={<MyProfile/>}/>
                   <Route path='edit' element={<EditMyProfile/>}/>
