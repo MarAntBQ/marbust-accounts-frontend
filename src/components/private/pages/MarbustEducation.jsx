@@ -23,7 +23,7 @@ export const MarbustEducation = () => {
   }, []);
 
   return (
-    <div className='dashboard__home'>
+    <div className='dashboard__education'>
       <h1>Marbust Education</h1>
       <hr />
       {auth && auth.firstName && auth.lastName && (<h5>{auth.firstName + ' ' + auth.lastName}</h5>)}
